@@ -1,0 +1,14 @@
+function params=setParams
+    
+    params.time.T
+    params.time.dt
+    params.time.N
+    
+    
+    params.b_init
+    params.b_goal
+    params.goal_radius
+    params.goal_thresh
+    params.div
+    
+end

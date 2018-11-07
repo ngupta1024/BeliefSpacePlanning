@@ -1,0 +1,17 @@
+function platt_main
+    params=setParams;
+    curr_time=1;
+    % bel_curr is a struct
+    %        - num_gauss
+    %        - mean
+    %        - cov
+    bel(curr_time)=params.b_init;
+    while (~isGoalReached(bel(curr_time),params))
+        support_point(:,1)=modeMixGauss(bel(curr_time));
+        support_points(:,end+1)=sampleMixGauss(bel(curr_time),params);
+        [cost_vec,ctrl_vec]=ConvexPlan(bel(curr_time),support_points,params);
+        for tau=1:params.time.N-1
+        
+        end
+    end
+end

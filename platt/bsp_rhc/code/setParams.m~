@@ -1,0 +1,17 @@
+function setParams
+    params.b_init.num_gauss=2;
+    params.b_init.mean=[1.75 0; 2 0.5];
+    params.b_init.cov=repmat(0.0625,params.b_init,num_gauss,1);
+    params.b_goal=[0.25 1];
+    params.num_support_points=1000;
+    
+    params.num_robot_state=2;
+    params.num_ctrl=2;
+    
+    params.domain.A=eye(params.num_robot_state);
+    params.domain.B=eye(params.num_ctrl);
+    params.domain.process_noise_var=0.01;
+    
+    params.cost.alpha=0.4;
+    
+end

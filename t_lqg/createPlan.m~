@@ -1,0 +1,30 @@
+function [ctrl_des,mean_des]=createPlan(bel_curr,params)
+    ctrl  = zeros(params.num_ctrl,params.time.N); %1xN
+    bel_mean   = repmat(bel_curr.mean, 1, params.time.N);   %3xN
+    
+    initColl=[ctrl;bel_mean];
+    
+    global idx;
+    
+    idx.m = 3;
+    idx.u = 1;
+    
+    objective = @objFunc;
+    
+    A   = [];
+    b   = [];
+    Aeq = [];
+    beq = [];
+    ub  = [repmat(params.domain.ctrl_max,2,params.time.N); repmat(inf,size(initColl,1)-2,params.time.N)];
+    lb = -1*ub;
+    
+    function J=objFunc(init_coll)
+        P(:,:,1)=diag(repmat(bel_curr.cov,1,2));
+        J=0;
+        for t=2:params.time.N
+            P_=params.domain.A*P(:,:,t-1)*params.domain.A'+params.domain.G*params.process_noise_cov*params.domain.G';
+            S=params.domain.C*P_*params.domain.C'+params.domain.M*obsNoiseCov(init_coll(
+            J=J+trace(params.gains.Q*P(:,:,t)*params.gains.Q)+(init_coll(idx.u:idx.m-1,t-1)'*params.gains.R*init_coll(idx.u:idx.m-1,t-1));
+        end
+    end
+end
